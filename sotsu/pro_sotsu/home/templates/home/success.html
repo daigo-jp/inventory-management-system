@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録完了</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;            
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .small-text {
+            font-size: 14px; 
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">フレストラント</div>
+    </div>
+    
+    <div class="container">
+        <h1>登録完了</h1>
+        <p class="small-text">アカウントの登録が完了しました。</p>
+
+        <div class="btn-container">
+        <a href="{% url 'login' %}" class="btn">ログインページへ</a>
+        </div>
+
+    </div>
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>

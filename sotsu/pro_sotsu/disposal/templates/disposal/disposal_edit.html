@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ロス編集</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 35px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-save:hover {
+            background-color: #218838;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+    </style>         
+</head> 
+                <body>
+                    <div class="header">
+                        <div>フレストラント</div>
+                        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+                        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+                    </div>
+                    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->    
+                    <div class="container">
+                        <h1>ロス編集</h1>
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <label for="disposal_menu">商品名:</label>
+                            <select id="disposal_menu" name="disposal_menu" required>
+                                {% for product in form.fields.disposal_menu.queryset %}
+                                    <option value="{{ product.id }}" {% if disposal.disposal_menu.id == product.id %}selected{% endif %}>
+                                     {{ product.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            
+                            <label for="category">種類:</label>
+                            <input type="text" id="category" name="category" value="{{ disposal.category }}" required readonly>
+                
+                            <label for="price">価格:</label>
+                            <input type="text" id="price" name="price" value="{{ disposal.price }}" required readonly>
+                
+                            <label for="disposal_quantity">数量:</label>
+                            <input type="number" id="quantity" name="disposal_quantity" value="{{ disposal.disposal_quantity }}" required>
+                
+                            <label for="disposal_date">日付:</label>
+                            <input type="date" id="disposal_date" name="disposal_date" value="{{ disposal.disposal_date }}" required>
+                
+                            <label for="disposal_notes">説明（任意）:</label>
+                            <textarea id="disposal_notes" name="disposal_notes">{{ disposal.disposal_notes }}</textarea>
+                
+                            <label for="disposal_registrant">ロス登録者名:</label>
+                            <input type="text" id="disposal_registrant" name="disposal_registrant" value="{{ disposal.disposal_registrant }}" required>
+                
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-save">編集</button>
+                                <a href="{% url 'disposal_manage' %}" class="btn btn-back">戻る</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="footer">© 2025 フレストラント</div>
+                </body>
+                </html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文ページ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+    
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 40px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-register {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-register:hover {
+            background-color: #218838;
+        }
+
+
+        .btn-order {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 7px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-order:hover {
+            background-color: #218838;
+        }
+
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 5px;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+    </div>
+    <div class="date">{{ current_date }}</div> <!-- 日付を表示 --> 
+    <div class="container">
+        <h1>🛎️注文ページ🛎️</h1>
+
+        {% if error_message %}
+        <div style="color: red; font-weight: bold; margin-bottom: 15px;">{{ error_message|safe }}</div>
+        {% endif %}
+
+        <div class="action-bar">
+            <div class="search-container">
+                <form method="GET">
+                    <input type="text" name="q" placeholder="商品名で検索" value="{{ query }}">
+                    <button type="submit">検索</button>
+                </form>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>種類</th>
+                            <th>商品名</th>
+                            <th>価格</th>
+                            <th>数量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if products %}
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}円</td>
+                            <td>
+                                <input type="number" name="quantity_{{ product.id }}" min="1" value="1" style="width: 60px;">
+                            </td>
+                            <td>
+                                <button type="submit" name="add_product" value="{{ product.id }}" class="btn btn-info">追加</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center;">データがありません。</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>注文リスト</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>商品名</th>
+                            <th>価格</th>
+                            <th>数量</th>
+                            <th>小計</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if order_list %}
+                        {% for item in order_list %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.price }}円</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.subtotal }}円</td>
+                            <td>
+                                <button type="submit" name="remove_product" value="{{ item.product_id }}" class="btn btn-delete">削除</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: right;">合計金額:</td>
+                            <td>{{ total_price }}円</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center;">注文リストは空です。</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="back-container">
+                <a href="{% url 'main_page' %}" class="btn-back">メインに戻る</a>
+                
+                <!--注文が空の状態でボタンを押すとエラーメッセージが表示される-->
+                {% if order_list %}
+                    <a href="{% url 'order_confirmation' %}" class="btn-order">注文する</a>
+                {% else %}
+                    <button class="btn-order" type="button" onclick="showErrorMessage()">注文する</button>
+                    <div id="error-message" style="color: red; font-weight: bold; margin-top: 10px; display: none;">注文を選んでください</div>
+                {% endif %}
+            </div>
+            
+            <script>
+                function showErrorMessage() {
+                    var errorMessage = document.getElementById('error-message');
+                    errorMessage.style.display = 'block'; // エラーメッセージを表示
+                }
+            </script>
+        </form>
+    </div>
+
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>

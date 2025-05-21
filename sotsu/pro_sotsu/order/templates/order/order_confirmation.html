@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文確認画面</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #ede4cd;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .header {
+        background-color: #f7bd8f;
+        color: white;
+        padding: 15px 20px;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 30px;
+        font-weight: bold;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .user {
+        text-align: right;
+        margin: 10px 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .work {
+        text-align: right;
+        margin: 10px 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .date {
+        text-align: right;
+        margin: 10px 20px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    h1 {
+        position: relative;
+        color: #158b2b;
+        font-size: 35px;
+        padding: 10px 0;
+        text-align: center;
+        margin: 1em 0;
+      }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table th, table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    table th {
+        background-color: rgb(0, 171, 66);
+        color: white;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-danger {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #218838;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-success {
+        background-color:rgb(29, 164, 81);
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color::rgb(14, 109, 51);
+    }
+
+
+    .footer {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        margin-top: 20px;
+    }
+
+    .total {
+        text-align: right;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .total-row {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+       
+    </div>
+
+    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->
+
+    <div class="container">
+        <h1>注文内容の確認</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>数量</th>
+                    <th>小計</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_list %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td colspan="3" style="text-align: right;">合計金額:</td>
+                    <td class="total">{{ total_price }}円</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="btn-container">
+            <a href="{% url 'order' %}" class="btn btn-back">注文一覧に戻る</a>
+            <!-- order_confirmation.htmlの一部 -->
+<form method="post" action="{% url 'order_complete' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">注文を確定</button>
+</form>
+
+        </div>
+    </div>
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>

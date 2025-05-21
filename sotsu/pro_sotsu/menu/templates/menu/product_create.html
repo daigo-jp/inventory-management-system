@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品新規登録</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 35px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: space-between;
+        }
+        .ingredient-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .ingredient-item label {
+            flex: 1;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ingredient-item input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-left: 10px;
+            text-align: right;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-register {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-register:hover {
+            background-color: #218838;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .ingredient-list-container {
+            max-height: 300px; 
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+    </div>
+    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->  
+    <div class="container">
+        <h1>商品新規登録</h1>
+        
+        <!-- エラーメッセージの表示 -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name">商品名:</label>
+            <input type="text" id="name" name="name" value="{{ form.name.value }}" required>
+
+            <label for="category">種類:</label>
+            <input type="text" id="category" name="category" placeholder="例: 主菜、副菜、デザートなど" required>
+
+            <label for="price">価格:</label>
+            <input type="number" id="price" name="price" value="{{ form.price.value }}" required>
+
+            <label for="notes">説明（任意）:</label>
+            <textarea id="notes" name="notes" style="width: 95%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">{{ form.notes.value }}</textarea>
+
+            <h3>使用する食品と数量</h3>
+            <div style="display: flex; align-items: center; margin-top: 10px;">
+                <input type="text" id="ingredient-search" placeholder="食材を検索" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                <button type="button" id="ingredient-search-btn" style="padding: 10px 20px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; background-color: #28a745; color: white; cursor: pointer; margin-left: 5px;">検索</button>
+            </div>
+
+            <div class="ingredient-list-container" id="ingredient-list">
+                {% for food in ingredients %}
+                    <div class="ingredient-item">
+                        <input type="checkbox" id="food_{{ food.id }}" name="ingredients" value="{{ food.id }}">
+                        <label for="food_{{ food.id }}">{{ food.name }}</label>
+                        <input type="number" name="quantity_{{ food.id }}" min="0" placeholder="数量を入力">
+                    </div>
+                {% endfor %}
+            </div> 
+
+            <script>
+                document.getElementById('ingredient-search-btn').addEventListener('click', function() {
+                    const searchValue = document.getElementById('ingredient-search').value.toLowerCase();
+                    const ingredientItems = document.querySelectorAll('#ingredient-list .ingredient-item');
+                    
+                    ingredientItems.forEach(item => {
+                        const label = item.querySelector('label').innerText.toLowerCase();
+                        if (searchValue === "" || label.includes(searchValue)) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            </script>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn btn-register">登録</button>
+                <a href="{% url 'product_list' %}" class="btn btn-back">戻る</a>
+            </div>
+        </form>
+    </div>
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>

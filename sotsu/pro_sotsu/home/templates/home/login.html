@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 35px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background-color:  #28a745;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #218838;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+    </div>
+
+    <div class="container">
+        <h1>ログイン</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">店舗名:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+
+            <div class="btn-container">
+                <button type="submit" class="btn btn-login">ログイン</button>
+                <a href="{% url 'home' %}" class="btn btn-back">戻る</a>
+            </div>
+        </form>
+    </div>
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>

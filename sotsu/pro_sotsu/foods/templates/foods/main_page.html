@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メイン</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn-menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5em 2em;
+            text-decoration: none;
+            background-color:#82ae46;
+            color: white;
+            font-size: 25px; 
+            font-weight: 600; 
+            letter-spacing: 1px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+        .btn-disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 45px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+       
+    </div>
+
+    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->
+
+    <div class="container">
+        <h1>🍴メインメニュー🍴</h1>
+
+        <div class="menu-grid">
+            <a href="{% url 'food_list' %}" class="btn-menu">🥕食材</a>
+            <a href="{% url 'product_list' %}" class="btn-menu">🍽️商品</a>
+            <a href="{% url 'disposal_manage' %}" class="btn-menu">🗑️ロス</a>
+            <a href="{% url 'work_start_check' %}" class="btn-menu">⏳営業開始</a>
+            <a href="{% url 'work_end_check' %}" class="btn-menu">⌛営業終了</a>
+            <a href="{% url 'sales_list' %}" class="btn-menu">📊売上管理</a>
+            <a href="{% url 'order' %}" class="btn-menu">🛎️注文管理</a>
+            <a href="{% url 'logout_confirm' %}" class="btn-menu">🚪ログアウト</a>
+        </div>
+    </div>
+
+    <div class="footer">© 2025 フレストラント</div>
+</body>
+</html>
+

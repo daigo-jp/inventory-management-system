@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログアウト画面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 35px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+        .small-text {
+            font-size: 14px; 
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 20%;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            background-color: #f4747f;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+
+        .back-button {
+            width: 10%;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            background-color: #898989;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #e44e4e;
+        }
+        .back-button:hover {
+            background-color: #5e5e5e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->    
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+    </div>
+     <div class="container">
+        <h1>ログアウト</h1>
+        <p class="small-text">ログアウトしますか？</p>
+        <!-- ボタンを縦並びに配置するコンテナ -->
+        <div class="button-container">
+            <a href="{% url 'logout' %}" class="button">ログアウト</a>
+            <a href="{% url 'main_page' %}" class="back-button">戻る</a>
+        </div>
+     </div>
+    </div> 
+    <div class="footer">© 2025 フレストラント</div>
+    
+    
+</body>
+</html>

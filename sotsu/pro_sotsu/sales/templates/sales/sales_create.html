@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>売上登録</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+    
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 35px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="number"], select {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-register {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-register:hover {
+            background-color: #218838;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        /* 在庫数が少ないときの強調表示 */
+        .low-stock {
+            color: red;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>フレストラント</div>
+        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+    </div>
+    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->    
+    <div class="container">
+        <h1>売上登録</h1>
+
+        <!-- メッセージの表示 -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" id="sales-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <label>在庫数: <span id="stock-info" class="low-stock">商品を選択してください</span></label>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn btn-register">登録</button>
+                <a href="{% url 'sales_list' %}" class="btn btn-back">戻る</a>
+            </div>
+        </form>
+    </div>
+    <div class="footer">© 2025 フレストラント</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productSelect = document.getElementById('id_product');
+            const stockInfo = document.getElementById('stock-info');
+
+            productSelect.addEventListener('change', function () {
+                const productId = this.value;
+                
+                if (productId) {
+                    fetch(`/sales/get_stock/${productId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const stock = data.stock;
+                            stockInfo.textContent = stock + " 個";
+
+                            // 在庫が10個以下の場合に強調表示
+                            if (stock <= 10) {
+                                stockInfo.classList.add('low-stock');
+                            } else {
+                                stockInfo.classList.remove('low-stock');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching stock:', error);
+                            stockInfo.textContent = "在庫数の取得に失敗しました";
+                        });
+                } else {
+                    stockInfo.textContent = "商品を選択してください";
+                    stockInfo.classList.remove('low-stock');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

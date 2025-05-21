@@ -1,0 +1,200 @@
+/* ボタン全体のスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: 48%; /* ボタン幅を調整 */
+    box-sizing: border-box;
+}
+
+/* 登録ボタン (明るい緑色) */
+.btn-success {
+    background-color: #4CAF50; /* 明るい緑 */
+    color: white;
+}
+.btn-success:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* 戻るボタン (グレー) */
+.btn-secondary {
+    background-color: #6c757d; /* グレー */
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* 削除ボタン (赤色) */
+.btn-danger {
+    background-color: #dc3545; /* 赤 */
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* 情報ボタン (灰色) */
+.btn-info {
+    background-color: #17a2b8; /* 情報ボタン用の青緑 */
+    color: white;
+}
+.btn-info:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}
+
+/* 一覧ページ全体のコンテナ */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* テーブルのスタイル */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+/* テーブルヘッダーのスタイル */
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* テーブルの行のホバー時の色 */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 検索バーとボタンの配置 */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* ヘッダー部分 */
+.header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* フッター */
+.footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    color: #777;
+}
+
+/* フォームのテキストボックス、セレクト、テキストエリアの幅調整 */
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%; /* 幅を100%に設定 */
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* パディングとボーダーを含めて幅を調整 */
+}
+
+/* ボタンコンテナの幅を調整して整列 */
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* ボタンの詳細調整（重複削除） */
+.btn {
+    width: 48%; /* ボタン幅を揃える */
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* ボタンのホバー時の動き */
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* フォームのラベルや入力ボックススタイルの追加 */
+.form-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container .form-group {
+    margin-bottom: 15px;
+}
+
+.form-container .label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-container input, .form-container select, .form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* モバイルレスポンシブ対応 */
+@media (max-width: 600px) {
+    .btn {
+        width: 100%; /* モバイルではボタンを全幅に */
+    }
+
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+}

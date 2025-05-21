@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>売上一覧</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ede4cd;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #f7bd8f;
+            color: white;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+    
+    
+        .user {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .work {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
+        .date {
+            text-align: right;
+            margin: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            position: relative;
+            color: #158b2b;
+            font-size: 40px;
+            padding: 10px 0;
+            text-align: center;
+            margin: 1em 0;
+          }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-green {
+            background-color: #28a745;
+        }
+        .btn-green:hover {
+            background-color: #218838;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .dropdown-content ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        .dropdown-content ul li {
+            margin: 5px 0;
+        }
+        .low-stock {
+            color: red;
+            font-weight: bold;
+        }
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .toggle-button {
+            background-color:rgb(136, 148, 163);
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            text-align:center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .toggle-button:hover {
+            background-color:rgb(93, 106, 121);
+        }
+            
+        .toggle-content {
+            display: none;
+            padding-left: 20px;
+            
+        
+        }
+    </style>
+</head>
+<body>
+        <div class="header">
+            <div>フレストラント</div>
+            <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
+            <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+        </div>
+        <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->    
+    </div>
+    <div class="container">
+        <h1>📊売上一覧📊</h1>
+        
+        <div class="btn-container">
+            <a href="{% url 'sales_create' %}" class="btn btn-green">新しい売上を登録</a>
+            <a href="{% url 'sales_graph' %}" class="btn">日ごとの売上グラフを見る</a>
+            <div class="btn" onclick="toggleDropdown()">在庫が10以下の商品</div>
+        </div>
+
+        <!-- 在庫10以下の商品のプルダウンリスト -->
+        <div class="dropdown-content" id="low-stock-list">
+            {% if low_stock_products %}
+            <ul>
+                {% for product in low_stock_products %}
+                    <li>
+                        <span class="low-stock">{{ product.name }}</span>: {{ product.get_stock }} 個
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>在庫が10以下の商品はありません。</p>
+            {% endif %}
+        </div>
+
+         <!-- 売上一覧 -->
+         <div class="table-container">
+            {% for date, sales_on_date in grouped_sales.items %}
+                <button class="toggle-button" onclick="toggleVisibility('{{ date }}')">{{ date|date:"Y年m月d日" }}</button>
+
+                <div class="toggle-content" id="{{ date }}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>商品名</th>
+                                <th>数量</th>
+                                <th>価格</th>
+                                <th>合計金額</th>
+                                <th>販売日</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in sales_on_date %}
+                                <tr>
+                                    <td>{{ sale.product.name }}</td>
+                                    <td>{{ sale.quantity }}</td>
+                                    <td>{{ sale.price }}</td>
+                                    <td>{{ sale.total_cost }}</td>
+                                    <td>{{ sale.sale_date|date:"Y年m月d日 H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                            {% if not sales_on_date %}
+                                <tr>
+                                    <td colspan="5" style="text-align: center;">データがありません。</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="back-container">
+            <a href="{% url 'main_page' %}" class="btn-back">メインに戻る</a>
+        </div>   
+    </div>
+    <div class="footer">
+        © 2025 フレストラント
+        </div>
+
+    <script>
+
+        // 日付ごとの売上を表示/非表示に切り替える関数
+        function toggleVisibility(date) {
+            const content = document.getElementById(date);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+
+
+
+        function toggleDropdown() {
+            const dropdownContent = document.getElementById('low-stock-list');
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
