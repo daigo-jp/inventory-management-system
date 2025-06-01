@@ -8,8 +8,10 @@
 <img src="sotsu/pro_sotsu/screenshots/login.png" alt="ログイン画面" width="400">
 - 食品・商品・ロスの詳細、登録、編集、検索
 <img src="sotsu/pro_sotsu/screenshots/food_list.png" alt="食品" width="400">
+<img src="sotsu/pro_sotsu/screenshots/disposal.png" alt="ロス" width="400">
+<img src="sotsu/pro_sotsu/screenshots/" alt="注文" width="400">
 - 売り上げのグラフ表示
-- 
+  <img src="sotsu/pro_sotsu/screenshots/sales_graph.png" alt="グラフ" width="400">
 - 営業時間・売上・注文の管理
 
 ## 使用技術
@@ -21,6 +23,7 @@
 ```bash
 git clone https://github.com/daigo-jp/inventory-management-system.git
 cd sotsu/pro_sotsu
+python manage.py migrate
 python manage.py runserver
 
 ##苦労、工夫した点
