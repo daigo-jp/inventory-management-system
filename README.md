@@ -5,10 +5,11 @@
 
 ## 主な機能
 - ユーザー登録・ログイン
-<img src="sotsu/pro_sotsu/screenshots/login_page.png" alt="ログイン画面" width="400">
+<img src="sotsu/pro_sotsu/screenshots/login.png" alt="ログイン画面" width="400">
 - 食品・商品・ロスの詳細、登録、編集、検索
-
+<img src="sotsu/pro_sotsu/screenshots/food_list.png" alt="食品" width="400">
 - 売り上げのグラフ表示
+- 
 - 営業時間・売上・注文の管理
 
 ## 使用技術
