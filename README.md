@@ -5,7 +5,7 @@
 
 ## 主な機能
 - ユーザー登録・ログイン
-![ログイン画面](screenshots/login.png)
+![ログイン画面](sotsu/pro_sotsu/screenshots/login.png)
 ![アカウント作成画面](screenshots/create_ac.png)
 - 食品・商品・ロスの詳細、登録、編集、検索
 - 売り上げのグラフ表示
