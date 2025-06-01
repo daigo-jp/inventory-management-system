@@ -5,9 +5,9 @@
 
 ## 主な機能
 - ユーザー登録・ログイン
-![ログイン画面](sotsu/pro_sotsu/screenshots/login.png)
-![アカウント作成画面](screenshots/create_ac.png)
+<img src="sotsu/prp_sotsu/screenshots/login_page.png" alt="ログイン画面" width="400">
 - 食品・商品・ロスの詳細、登録、編集、検索
+
 - 売り上げのグラフ表示
 - 営業時間・売上・注文の管理
 
