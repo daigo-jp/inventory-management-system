@@ -21,14 +21,7 @@
 - Python / Django（バックエンド）
 - SQLite（データベース）
 - HTML / CSS（フロントエンド）
-
-## 起動方法（開発環境）
-```bash
-git clone https://github.com/daigo-jp/inventory-management-system.git
-cd sotsu/pro_sotsu
-python manage.py migrate
-python manage.py runserver
-
+- 
 ##苦労、工夫した点
 
 - 変数名をしっかりと考え見やすいプログラムにしました
@@ -43,4 +36,11 @@ python manage.py runserver
 - 機能設計やデータベース設計に関するアドバイス  
 - フレームワークDjangoの扱い方
 - エラーの原因特定と解決方法の提案  
+
+## 起動方法（開発環境）
+```bash
+git clone https://github.com/daigo-jp/inventory-management-system.git
+cd sotsu/pro_sotsu
+python manage.py migrate
+python manage.py runserver
 
