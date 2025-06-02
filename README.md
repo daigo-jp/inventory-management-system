@@ -40,7 +40,7 @@
 ## 起動方法（開発環境）
 ```bash
 git clone https://github.com/daigo-jp/inventory-management-system.git
-cd sotsu/pro_sotsu
+cd inventory-management-system/sotsu/pro_sotsu
 python manage.py migrate
 python manage.py runserver
 
