@@ -5,40 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>売上グラフ</title>
     <style>
+        /* ページ全体の基本スタイル */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #ede4cd;
+            background-color: #ede4cd; /* 元の背景色 */
             margin: 0;
             padding: 0;
         }
         
+        /* ヘッダー全体のスタイル */
         .header {
-            background-color: #f7bd8f;
+            background-color: #f7bd8f; /* 元のヘッダー色 */
             color: white;
             padding: 15px 20px;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 30px;
-            font-weight: bold;
-            border-radius: 10px 10px 0 0;
+            display: flex; /* 中の要素を横並びにする */
+            justify-content: space-between; /* 両端に要素を配置する */
+            align-items: center; /* 上下中央に揃える */
         }
 
-    
-    
-        .user {
-            text-align: right;
-            margin: 10px 20px;
-            font-size: 20px;
+        /* ヘッダーの左側に表示するタイトルのスタイル */
+        .header-title {
+            font-size: 30px;
             font-weight: bold;
         }
-    
-        .work {
-            text-align: right;
-            margin: 10px 20px;
+
+        /* ヘッダーの右側に表示する情報（店舗名など）をまとめる部分のスタイル */
+        .header-info {
+            text-align: right; /* 右寄せにする */
+        }
+
+        /* 店舗名や営業状態を表示する行のスタイル */
+        .info-line {
             font-size: 20px;
             font-weight: bold;
+            line-height: 1.4; /* 行間を少し空ける */
         }
-    
+
+        /* 日付を表示する行のスタイル */
         .date {
             text-align: right;
             margin: 10px 20px;
@@ -46,7 +49,9 @@
             font-weight: bold;
         }
 
+        /* メインコンテンツを囲む白いコンテナのスタイル */
         .container {
+            max-width: 1200px; /* PCでも見やすいように最大幅を設定 */
             margin: 30px auto;
             padding: 20px;
             background-color: #fff;
@@ -55,21 +60,25 @@
             text-align: center;
         }
 
+        /* 「日別売上グラフ」の見出しのスタイル */
         h1 {
-            position: relative;
-            color: #158b2b;
+            color: #158b2b; /* 元の見出し色 */
             font-size: 35px;
             padding: 10px 0;
             text-align: center;
             margin: 1em 0;
-          }
-
-        .chart-container {
-            display: inline-block;
-            margin: 25px auto;
         }
 
+        /* グラフ画像を囲むコンテナのスタイル */
+        .chart-container img {
+            max-width: 100%; /* コンテナからはみ出さないようにする */
+            height: auto;
+        }
+        
+        /* 「一覧に戻る」ボタンのスタイル */
         .btn-back {
+            display: inline-block;
+            margin-top: 20px;
             background-color: #6c757d;
             color: white;
             padding: 10px 20px;
@@ -79,10 +88,12 @@
             cursor: pointer;
         }
         
+        /* ボタンにマウスを乗せた時のスタイル */
         .btn-back:hover {
             background-color: #5a6268;
         }
 
+        /* フッターのスタイル */
         .footer {
             margin-top: 20px;
             text-align: center;
@@ -93,23 +104,26 @@
 </head>
 <body>
     <div class="header">
-        <div>フレストラント</div>
-        <div class="user">{{ user.store_name }}</div> <!--ログイン中のアカウントを表示-->         
-        <div class="work">{{ work_status }}</div> <!-- 営業状態を表示 -->
+        <div class="header-title">フレストラント</div>
+        <div class="header-info">
+            <div class="info-line">{{ user.store_name }}</div>
+            <div class="info-line">{{ work_status }}</div>
+        </div>
     </div>
-    <div class="date">{{ current_date }}</div> <!-- 日付を表示 -->    
+    
+    <div class="date">{{ current_date }}</div>
 
     <div class="container">
-    <h1>日別売上グラフ</h1>
-    <div class="chart-container">
-        <img src="data:image/png;base64,{{ chart }}" alt="日別売上グラフ">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ chart }}" alt="日別売上グラフ">
+        </div>
+        <div>
+            <a href="{% url 'sales_list' %}" class="btn-back">売上一覧に戻る</a>
+        </div>
     </div>
-    <div>
-        <a href="{% url 'sales_list' %}" class="btn-back">売上一覧に戻る</a>
-    </div>
-</div>
+
     <div class="footer">
         © 2025 フレストラント
-        </div>
+    </div>
 </body>
 </html>
